@@ -1,46 +1,39 @@
 const display = document.querySelector('#display');
 let o = '';
+let result = 0;
 num1 = '';
 num2 = '';
 
 
+
 //basic operators
-function add (a,b) {
-    if (a === NaN && b === NaN) {
+function add (o,num1,num2) {
+    if (num1 === NaN || num2 === NaN) {
         alert("Enter a valid number:");
-    }return a + b;
+    }return parseInt(num1) + parseInt(num2);
 };
 
 
 
-function subtract (a,b) {
-    if (a === NaN && b === NaN) {
+function subtract (o,num1,num2) {
+    if (num1 === NaN || num2 === NaN) {
         alert("Enter a valid number:");
-    }return a - b;
+    }return parseInt(num1) - parseInt(num2);
 };
 
 
 
-function multiply (a,b) {
-    if (a === NaN && b === NaN) {
+function multiply (o,num1,num2) {
+    if (num1 === NaN || num2 === NaN) {
         alert("Enter a valid number:");
-    }return a * b;
+    }return parseInt(num1) * parseInt(num2);
 };
 
 
-function divide (a,b) {
-    if (a === NaN && b === NaN) {
+function divide (o,num1,num2) {
+    if (num1 === NaN || num2 === NaN) {
         alert("Enter a valid number:");
-    }return a / b;
-};
-
-
-
-const operate = (o,num1,num2) => {
-    if (o === '+') return add(a,b);
-    if (o === '-') return subtract(a,b);
-    if (o === '*') return multiply(a,b);
-    if (o === '%') return divide(a,b);
+    }return parseInt(num1) / parseInt(num2);
 };
 
 
@@ -49,10 +42,11 @@ digits.forEach(button => {
     button.addEventListener('click', () => {
         if (o === '') {
             num1 += button.textContent;
-            display.textContent = num1;
-        }else (o !== '=' && o !== "") 
-            num2 = e.target.textContent
-        
+            display.textContent = num1 + ' ' + o;
+        }else {
+            num2 += button.textContent;
+            display.textContent = num1 + ' ' + o + ' ' + num2;
+        }
     })
 });
 
@@ -61,14 +55,38 @@ digits.forEach(button => {
 const operators = document.querySelectorAll('.operator-btn');
 operators.forEach(operator => {
     operator.addEventListener('click', () => {
-        o = operator.textContent
-        
-            display.textContent = num1 + ' ' + o + ' ' + num2;
-        
+        if (operator.textContent !== '=') {
+            o = operator.textContent
+            console.log(num1);
+            console.log(o);
+            }else {
+                console.log(num2);
+                switch(o) {
+                    case '+' :
+                        display.textContent = (add(o,num1,num2))
+                        result = display;
+                        break;
+
+                    case '-' :
+                        display.textContent = (subtract(o,num1,num2))
+                        break;
+
+                    case '*' :
+                        display.textContent = (multiply(o,num1,num2))
+                        break;
+                    case '/' :
+                        display.textContent = (divide(o,num1,num2))
+                        break;
+
+                    default :
+                        break;
+                }
+            }
     })
 });
 
-/*
-const equals = document.getElementById('#btn-equals');
-equals.addEventListener('click', operate(o,num1,num2))
-*/
+
+const clear = document.getElementById('#btn-clear');
+clear.addEventListener('click', () => { 
+    
+})
