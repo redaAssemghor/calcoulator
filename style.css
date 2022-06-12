@@ -11,19 +11,36 @@ body {
 }
 .container {
     display: grid;
-    min-height: 100vh;
+    flex-direction: column;
     justify-content: center;
-    align-content: center;
-    grid-template-columns: repeat(1, 200px);
-    grid-template-rows: minmax(120px, auto) repeat(5, 100px);
+    align-items: center;
+}
+
+.container #screen {
+    font-size: 4rem;
+    background-color: #efd7a5;
+    border: 1px solid #4289a7;
+    opacity: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 10px;
+    padding-top: 39px;
+    padding-bottom: 5px;
+    border-radius: 5px;
 }
 
 .container button {
     margin: 0;
-    padding-left: 20px;
-    padding-right: 20px;
     cursor: pointer;
     font-size: 2rem;
+    border-radius: 5px;
+}
+
+.container .digits {
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: minmax(100px, auto) repeat(4, 100px);
 }
 
 
@@ -32,9 +49,7 @@ body {
 }
 
 
-#display {
-    background-color: rgba(0, 0, 0, 0.75);
-}
+
 
 
 

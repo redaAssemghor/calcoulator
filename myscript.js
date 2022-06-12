@@ -1,92 +1,98 @@
 const display = document.querySelector('#display');
-let o = '';
-let result = 0;
-num1 = '';
-num2 = '';
+const display2 = document.querySelector('#display2');
+const clear = document.getElementById('#btn-clear');
+const digits = document.querySelectorAll('.number-btn');
+const operators = document.querySelectorAll('.operator-btn');
+const screen = document.querySelector('#screen');
+const equals = document.querySelector('#btn-equals');
+
+display.textContent = ' ';
+display2.textContent = ' ';
 
 
 
 //basic operators
-function add (o,num1,num2) {
-    if (num1 === NaN || num2 === NaN) {
-        alert("Enter a valid number:");
-    }return parseInt(num1) + parseInt(num2);
+function add (num1,num2) {
+    return num1 + num2;
 };
 
 
 
-function subtract (o,num1,num2) {
-    if (num1 === NaN || num2 === NaN) {
-        alert("Enter a valid number:");
-    }return parseInt(num1) - parseInt(num2);
+function subtract (num1,num2) {
+    return num1 - num2;
 };
 
 
 
-function multiply (o,num1,num2) {
-    if (num1 === NaN || num2 === NaN) {
-        alert("Enter a valid number:");
-    }return parseInt(num1) * parseInt(num2);
+function multiply (num1,num2) {
+    return num1 * num2;
 };
 
 
-function divide (o,num1,num2) {
-    if (num1 === NaN || num2 === NaN) {
-        alert("Enter a valid number:");
-    }return parseInt(num1) / parseInt(num2);
+function divide (num1,num2) {
+    return num1 / num2;
 };
 
+function operate(num1, num2, operator) {
+    switch (operator) {
+      case "+":
+        return add(num1, num2);
+      case "-":
+        return subtract(num1, num2);
+      case "*":
+        return multiply(num1, num2);
+      case "/":
+        return divide(num1, num2);
+    }
+  };
 
-const digits = document.querySelectorAll('.number-btn');
-digits.forEach(button => {
-    button.addEventListener('click', () => {
-        if (o === '') {
-            num1 += button.textContent;
-            display.textContent = num1 + ' ' + o;
-        }else {
-            num2 += button.textContent;
-            display.textContent = num1 + ' ' + o + ' ' + num2;
-        }
+let storedNumber = '';
+let clickedOperator = ''
+let firstNumber = '';
+let result = '';
+
+
+digits.forEach(digit => {
+    digit.addEventListener('click', () => {
+        storedNumber += digit.textContent;
+        display2.textContent = storedNumber;
     })
 });
 
 
 
-const operators = document.querySelectorAll('.operator-btn');
-operators.forEach(operator => {
-    operator.addEventListener('click', () => {
-        if (operator.textContent !== '=') {
-            o = operator.textContent
-            console.log(num1);
-            console.log(o);
-            }else {
-                console.log(num2);
-                switch(o) {
-                    case '+' :
-                        display.textContent = (add(o,num1,num2))
-                        result = display;
-                        break;
 
-                    case '-' :
-                        display.textContent = (subtract(o,num1,num2))
-                        break;
-
-                    case '*' :
-                        display.textContent = (multiply(o,num1,num2))
-                        break;
-                    case '/' :
-                        display.textContent = (divide(o,num1,num2))
-                        break;
-
-                    default :
-                        break;
-                }
-            }
+operators.forEach(op => {
+    op.addEventListener('click', () => {
+       if (firstNumber && storedNumber) {
+        displayResults();
+       }
+        firstNumber = storedNumber;
+      
+        clickedOperator = op.textContent;
+        display2.textContent = ' ';
+        display.textContent = storedNumber + clickedOperator;
+        storedNumber = ' ';
     })
 });
 
+equals.addEventListener('click', () => {
+    displayResults()
+});
 
-const clear = document.getElementById('#btn-clear');
-clear.addEventListener('click', () => { 
-    
-})
+function displayResults() {
+    result = operate(parseFloat(firstNumber), parseFloat(storedNumber), clickedOperator);
+    display2.textContent = result;
+    display.textContent = firstNumber + ' ' + clickedOperator + ' ' + storedNumber;
+    storedNumber = result;
+};
+
+function clearBtn() {
+  display2.textContent = ' ';
+  display.textContent = ' ';
+
+};
+
+clear.addEventListener('click', () => {
+  clearBtn()
+});
